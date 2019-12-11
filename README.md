@@ -4,11 +4,14 @@
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
 
+
 ### 确认文件
 
+`2DUV/`目录下为计算2DUV所需脚本文件，`GromacsFile/`目录下为跑MD模拟所需要的文件，将所有脚本下载：
 
-
-
+```bash
+git clone https://github.com/MTSD-UPC/2duv_tutorial.git
+```
 
 ### 确认环境
 
@@ -29,6 +32,8 @@ export EHEF='/home/ren/EHEF'  #改成自己的目录下的也可以
 这里以Gromacs为例，我的蛋白的PDB ID为[1hda](https://www.rcsb.org/structure/1hda)。
 
 首先打开1hda.pdb 删除里面的所有以HEATEM开头的行数，然后保存文件。
+
+将pdb文件复制到`GromacsFile/`目录下。
 
 ```bash
 #step 1
@@ -179,7 +184,7 @@ do_dssp -f npt.trr -s npt.tpr -o ss.xpm -ssdump ss.dat
 
 ### 计算2DUV光谱
 
-本过程将会用到大量的脚本，首先先新建一个2DUV计算文件夹，然后将之前的pdb数据库源文件`1hda.pdb`、生成的轨迹文件`trj_pre.pdb`、二级结构文件`ss.dat`拷贝到这个新的文件夹下，再把`2DUV_script`文件夹中的所有脚本全部拷贝到2DUV计算文件夹下。
+本过程将会用到大量的脚本，将之前的pdb数据库源文件`1hda.pdb`、生成的轨迹文件`trj_pre.pdb`、二级结构文件`ss.dat`拷贝到`2DUV/`目录下。
 
 #### 拆分轨迹文件
 
@@ -224,7 +229,7 @@ python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat
 ```
 
 > ```bash
-> #-f pdb文件
+> #-f pdb文件名
 > #-c 蛋白的链的个数
 > #-b 总snapshot数目
 > #-p 二级结构的pattern,HHHHHHHHHH* 代表查找10个残基以上的helix片段。
@@ -279,4 +284,5 @@ python 4_run_calspectra.py 0 9
 ```
 
 提交完所有snapshot的作业即可。
+
 
