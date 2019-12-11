@@ -4,7 +4,6 @@
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
 
-[TOC]
 
 ### 确认文件
 
