@@ -1,0 +1,47 @@
+$REGISTRATION
+KI
+$END
+
+$SYSTEM
+ELECTRONIC 1
+SYSTEM_KEYWORD      Excitonic_Disordered_ens__
+INP_HAM_L_                  Hamil.dat # cm-1
+INP_DIP_L_                  Edipl.dat # e*Angstrom
+INP_COO_L_                  coord.dat # Angstrom
+INP_MAG_L_                  Mdipl.dat # e*Angstrom*Angstrom/fs
+#WRITE_OUT_SM  spec_cal.sm
+READ_IN_SM spec_cal.sm    
+# Scattering matrix is the same for different chiral(xxxy, xxyy, xxyz) 
+# and different DEL_TIME2, but it is different for different TRUNCATION_MAGNITUDE
+
+CONST_DEPHASING 250
+TRUNCATION_ALL_TRANSITIONS 1
+TRUNCATION_MAGNITUDE 0.10
+NUMMODES     NMODS
+$END
+
+$KI
+INI_FREQ1     -42000
+FIN_FREQ1     -58000
+NUM_FREQ1      161
+INI_FREQ3      42000
+FIN_FREQ3      58000
+NUM_FREQ3      161
+DEL_TIME2      0
+
+NUM_SHOTS 1
+#CONVOLUTE_INH 1000
+PULSE_ENVELOPES_G 52000 3000 52000 3000 52000 3000 52000 3000
+ADD_PULSE_ENV 1
+WAV_CI 0     #if we have odd number of OPT_POL, we use this WAV_CI 1
+OPT_POL1 0 0 1
+OPT_POL2 0 0 1
+OPT_POL3 0 0 1
+OPT_POL4 0 0 1
+OPT_WAV1 0 0 1
+OPT_WAV2 0 0 1
+OPT_WAV3 0 0 1
+OPT_WAV4 0 0 1
+OUT_FILE    FUV-KI-zzzz.dat
+$END
+
