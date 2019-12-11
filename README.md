@@ -45,7 +45,7 @@ genion -s ions.tpr -o solv_ions.gro -pname NA -nname CL -neutral
 
 ```
 
-到目前为止，你会看到输出提示告诉你`Will try to add 0 NA ions and 2 CL ions  `,意思是需要添加2个CL，0个NA，在输入`12`,选择Water那个选项。
+到目前为止，你会看到输出提示告诉你`Will try to add 0 NA ions and 2 CL ions  `,意思是需要添加2个CL，0个NA，输入`12`,选择Water选项。
 
 这时文件夹里有很多文件，找到`topo.top`文件，打开拖到最后进行修改，将SOL 的个数减2，增加CL的个数为2，NA因为是0就不需要添加了。在本例中，我的top文件修改如下：
 
