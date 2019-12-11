@@ -1,9 +1,9 @@
+
 ## 2DUV计算简明教程
 
 本教程的目的，不扯原理，快速计算出大量二维紫外光谱。
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
-
 
 ### 确认文件
 
@@ -96,6 +96,7 @@ mdrun -nt 20 -pin on -deffnm nvt
 
 修改`npt.mdp`文件的相关选项如下：
 
+> ```bash
 > nsteps		= 5000		; 2 * 5000 = 10 ps
 > dt		    = 0.002		; 2 fs
 > ; Output control
@@ -103,6 +104,7 @@ mdrun -nt 20 -pin on -deffnm nvt
 > nstvout		= 500		; save velocities every 1.0 ps
 > nstenergy	= 500		; save energies every 1.0 ps
 > nstlog		= 500		; update log file every 1.0 ps
+> ```
 
 解释： `nsteps`总步长，共500步，每一步2fs，共10ps，每隔`nstxout=500`步取一个snapshot，即每隔1ps取一个snapshot，而我们想要10个snapshot的话，就需要10ps。**注**：一般默认每隔1000fs就认为两个结构完全不同，所以一般都会设置每隔1000fs取一个snapshot。
 
@@ -142,11 +144,11 @@ mdrun -nt 20 -pin on -deffnm npt
 trjconv -s npt.tpr -f npt.trr -pbc whole -o trj_pre.pdb
 ```
 
-> **注意** 这里会提示输出的类型，同时需要记录几个数据，很重要。
->
-> 1. Protein 总共有**8788**个原子        
-> 2. Water 有 **65151**个原子
-> 3. 离子 有 **2** 个 （正负离子相加）
+**注意** 这里会提示输出的类型，同时需要记录几个数据，很重要。
+
+1. Protein 总共有**8788**个原子        
+2. Water 有 **65151**个原子
+3. 离子 有 **2** 个 （正负离子相加）
 
 ```bash
 0  #System 都输出来               
@@ -163,12 +165,14 @@ do_dssp -f npt.trr -s npt.tpr -o ss.xpm -ssdump ss.dat
 
 会生成两个文件`ss.xpm`与`ss.dat`，打开`ss.xpm`会显示每个二级结构的标识符含义，比如：
 
+> ```bash
 > "~  c #FFFFFF " /* "Coil" */,
 > "S  c #008000 " /* "Bend" */,
 > "T  c #FFFF00 " /* "Turn" */,
 > "H  c #0000FF " /* "A-Helix" */,
 > "I  c #800080 " /* "5-Helix" */,
 > "G  c #808080 " /* "3-Helix" */,
+> ```
 
 `ss.dat`是我们需要用于接下来计算的内容。
 
@@ -218,11 +222,13 @@ python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat
 
 ```
 
+> ```bash
 > #-f pdb文件
 > #-c 蛋白的链的个数
 > #-b 总snapshot数目
 > #-p 二级结构的pattern,HHHHHHHHHH* 代表查找10个残基以上的helix片段。
 > #-s do_dssp 生成的二级结构文件
+> ```
 
 #### 提取片段的Hamilton
 
