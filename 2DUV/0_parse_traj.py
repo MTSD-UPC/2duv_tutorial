@@ -1,11 +1,4 @@
-'''
-@Author: your name
-@Date: 2019-12-10 18:45:45
-@LastEditTime: 2019-12-11 19:20:16
-@LastEditors: your name
-@Description: In User Settings Edit
-@FilePath: \课题\2DUV\2DUV的计算\2DUV\0_parse_traj.py
-'''
+
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 #
