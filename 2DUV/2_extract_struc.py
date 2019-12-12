@@ -18,6 +18,7 @@ parser.add_argument('-f','--file',help='input pdb file name',type=str)
 parser.add_argument('-c','--chains',help='number of chains in pdb file; default=4',type=int,default=4)
 parser.add_argument('-b','--snapshots',help='number of snapshot',type=int,default=None)
 parser.add_argument('-p','--pattern',help='secondary structure pattern(str)',type=str)
+parser.add_argument('-d','--dirname',help='secondary structure name helix or sheet or others;default=helices',type=str,default='helices')
 parser.add_argument('-s','--ssfile',help='do_dssp file,default=ss.dat',type=str,default='ss.dat')
 args = parser.parse_args()
 
@@ -131,7 +132,7 @@ if __name__ == "__main__":
                 for resname in colums[4:]:
                     seqi += aa_codes[resname]
         chains.append(seqi)
-    np.save('chains.npy',chains)
+    np.save('chains.npy',chains) # save residue list of chains
 
     #step2. extract secondary structural fragments
     fh = open(args.ssfile, 'r')
@@ -144,7 +145,7 @@ if __name__ == "__main__":
             print('working on snapshot #{}'.format(i_snap))
         batch_dir = 'snapshots/{:05d}'.format((i_snap // 10)*10 + 10)
         snap_dir = '{}/{:05d}'.format(batch_dir, i_snap)
-        helix_path = '{}/helices'.format(snap_dir)
+        helix_path = '{}/{}'.format(snap_dir,args.dirname)
         if not os.path.exists(helix_path):
             os.mkdir(helix_path)
         out_fh = open('{}/helix.dat'.format(helix_path), 'w')
