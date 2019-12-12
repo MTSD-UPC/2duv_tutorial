@@ -4,7 +4,7 @@
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
 
-**注：大多数脚本是基于任老师的脚本修改**
+**注：本文档用到的大部分脚本是基于任老师的脚本修改**
 
 
 ### 确认文件
@@ -18,7 +18,6 @@ git clone https://github.com/MTSD-UPC/2duv_tutorial.git
 ### 确认环境
 
 - Gromacs
-
 - EHEF
 - SPECTRON 
 - Python 3.X
