@@ -221,11 +221,11 @@ python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat -d hel
 
 脚本名称：`3_extract_Hamil.py`
 
-脚本使用：`python 3_extract_Hamil.py [start] [end]` ，[start]、[end] 参数代表想要提取的snpshot的起始与终止序号，以本例为例：
+脚本使用：`python 3_extract_Hamil.py -h`查看帮助 ，以本例为例：
 
 ```bash
 
-python 3_extract_Hamil.py 0 9
+python 3_extract_Hamil.py -d helices -s 0 -e 9 
 #为了节约时间，本脚本可以指定计算snapshots的范围，
 #在需要计算很多snapshot时，往往Hamilton矩阵计算较慢，需要排队。
 #因此可以先对已经计算完Hamilton矩阵的snapshot应用本脚本。
