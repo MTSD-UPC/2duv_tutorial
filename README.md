@@ -4,7 +4,7 @@
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
 
-**注：本文档所使用的绝大多数脚本是基于任老师的脚本修改**
+**注：大多数脚本是基于任老师的脚本修改**
 
 
 ### 确认文件
@@ -84,30 +84,16 @@ genion -s ions.tpr -o solv_ions.gro -pname NA -nname CL -neutral
  
 ```
 
-跑nvt 撰写脚本：
+提交跑nvt的脚本：
 
-```shell
-#!/bin/bash
-#PBS -N n-ra
-##PBS -M renh@upc.edu.cn
-##PBS -m abe
-##PBS -o /path/to/stdout
-##PBS -e /path/to/stderr
+```bash
+# 默认在bench队列提交，20个核，更换队列与核数请修改`sub-md-nvt.sh`
 
-#PBS -q bench
-#PBS -l nodes=1:ppn=20
-#PBS -l walltime=9:00:00
+qsub sub-md-nvt.sh
 
-echo -n 'We work on:'
-cat $PBS_NODEFILE
-cd $PBS_O_WORKDIR
-
-source /opt/gromacs/4.6.7/bin/GMXRC
-
-mdrun -nt 20 -pin on -deffnm nvt
 ```
 
-提交任务跑nvt。
+等待任务完成。
 
 修改`npt.mdp`文件的相关选项如下：
 
@@ -129,30 +115,13 @@ mdrun -nt 20 -pin on -deffnm nvt
 grompp -f npt.mdp -c nvt.gro -p topol.top -o npt.tpr
 ```
 
-接着写脚本跑npt:(和nvt相比就把nvt替换掉npt就行)
+接着提交跑npt的脚本:(和nvt相比就把nvt替换掉npt就行)
 
 ```shell
-#!/bin/bash
-#PBS -N n-ra
-##PBS -M renh@upc.edu.cn
-##PBS -m abe
-##PBS -o /path/to/stdout
-##PBS -e /path/to/stderr
-
-#PBS -q bench
-#PBS -l nodes=1:ppn=20
-#PBS -l walltime=9:00:00
-
-echo -n 'We work on:'
-cat $PBS_NODEFILE
-cd $PBS_O_WORKDIR
-
-source /opt/gromacs/4.6.7/bin/GMXRC
-
-mdrun -nt 20 -pin on -deffnm npt
+qsub sub-md-npt.sh
 ```
 
-等着跑完接着输命令：
+等着跑完接着输命令输出轨迹：
 
 ```bash
 
