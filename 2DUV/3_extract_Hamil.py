@@ -20,10 +20,18 @@ import os
 import numpy as np
 import json
 import tarfile
+import argparse
 import sys
 
-start = sys.argv[1]
-end = sys.argv[2]
+parser = argparse.ArgumentParser(description='manul to this script')
+parser.add_argument('-s','--start',help='start number of snapshot',type=int)
+parser.add_argument('-e','--end',help='end number of snapshot',type=int)
+parser.add_argument('-d','--dir-name',help='dir name of secondary structure',type=str)
+args = parser.parse_args()
+
+start = args.start
+end = args.end
+stru_dir = args.dir_name
 
 chains = np.load('chains.npy').tolist()
 seq = ''.join(chains)
@@ -53,7 +61,7 @@ def parse_seg(seg, i_seg, snap_dir):
 
     seg_info['i_seg'] = i_seg
     seg_info['snap_dir'] = snap_dir
-    seg_dir = '{}/helices/seg{:02d}'.format(snap_dir, i_seg)
+    seg_dir = '{}/{}/seg{:02d}'.format(snap_dir,stru_dir,i_seg)
     seg_info['seg_dir'] = seg_dir
     return seg_info
 
@@ -115,7 +123,7 @@ if __name__ == '__main__':
         print('working on snapshot #', i_snap)
         batch_dir = 'snapshots/{:05d}'.format(i_snap // 10 * 10 + 10)
         snap_dir = '{}/{:05d}'.format(batch_dir, i_snap)
-        helices_dir = '{}/helices'.format(snap_dir)
+        helices_dir = '{}/{}'.format(snap_dir,stru_dir)
         helices_dat = '{}/helix.dat'.format(helices_dir)
 
         with open('{}/job.pdb'.format(snap_dir), 'r') as fh:
