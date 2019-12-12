@@ -6,6 +6,7 @@
 
 **注：本文档用到的大部分脚本是基于任老师的脚本修改**
 
+[TOC]
 
 ### 确认文件
 
@@ -201,7 +202,7 @@ python 1_cal_Hamil.py 0 9  #这行命令代表会提交序号为0~9的snapshot�
 
 ```bash
 
-python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat
+python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat -d helices
 
 ```
 
@@ -211,6 +212,7 @@ python 2_extract_struc.py -f 1hda.pdb -c 4 -b 10 -p HHHHHHHHHH* -s ss.dat
 > #-b 总snapshot数目
 > #-p 二级结构的pattern,HHHHHHHHHH* 代表查找10个残基以上的helix片段。
 > #-s do_dssp 生成的二级结构文件
+> #-d 存放二级结构片段的文件夹的名字，用于区分计算其他二级结构，可以随便起名字，默认helices。
 > ```
 
 #### 提取片段的Hamilton
