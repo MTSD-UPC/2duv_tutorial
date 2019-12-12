@@ -1,8 +1,10 @@
 ## 2DUV计算简明教程
 
-本教程的目的，不扯原理，快速计算出大量二维紫外光谱。
+本文档不讲原理，只记录计算流程，快速计算出大量二维紫外光谱。
 
 这里假设我们需要计算hemoglobin蛋白的10个snapshot，然后提取a-helix片段计算2DUV光谱。
+
+**注：本文档所使用的绝大多数脚本是基于任老师的脚本修改**
 
 
 ### 确认文件
@@ -14,6 +16,12 @@ git clone https://github.com/MTSD-UPC/2duv_tutorial.git
 ```
 
 ### 确认环境
+
+- Gromacs
+
+- EHEF
+- SPECTRON 
+- Python 3.X
 
 在你的home ~/目录下尽量添加以下内容到.bashrc文件（因为避免后面哪个脚本忘记写声明了...）：
 
@@ -36,11 +44,12 @@ export EHEF='/home/ren/EHEF'  #改成自己的目录下的也可以
 将pdb文件复制到`GromacsFile/`目录下。
 
 ```bash
-#step 1
+
 pdb2gmx -f 1hda.pdb -o 1hda.gro -water spc 
 8 #选择charmm27
-#step 2
+
 editconf -f 1hda.gro -o new_box.gro -c -d 1.0 -bt cubic
+
 genbox -cp new_box.gro -cs spc216.gro -o solv.gro -p topol.top
 
 grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
@@ -283,6 +292,5 @@ python 3_extract_Hamil.py 0 9
 python 4_run_calspectra.py 0 9
 ```
 
-提交完所有snapshot的作业即可。
-
+提交完所有snapshot的作业即可，这个过程计算较慢，一般如果一个snapshot有20个片段需要计算一个小时。
 
